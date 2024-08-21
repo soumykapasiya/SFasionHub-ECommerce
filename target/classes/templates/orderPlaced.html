@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    <title>Sanwara Fashion Hub</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap');
+
+        .btn:not(.nav-btns button) {
+            background-color: #fff;
+            color: rgb(85, 85, 85);
+            padding: 10px 28px;
+            border-radius: 25px;
+            border: none;
+        }
+
+        body {
+            background: white;
+        }
+
+        .navbar {
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .navbar-brand img {
+            max-width: 100px;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        @media screen and (min-width: 1024px) {
+            .navbar {
+                letter-spacing: 0.1em;
+            }
+
+            .navbar .navbar-nav .nav-link {
+                padding: 0.5em 1em;
+            }
+
+            .search-and-icons {
+                width: 50%;
+            }
+
+            .search-and-icons form {
+                flex: 1;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .navbar .navbar-brand img {
+                max-width: 7em;
+            }
+
+            .navbar .navbar-collapse {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: flex-end;
+            }
+
+            .search-and-icons {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .search-and-icons form input {
+            border-radius: 0;
+            height: 2em;
+            background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='grey' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 95%;
+        }
+
+        .search-and-icons form input:focus {
+            background: #fff;
+            box-shadow: none;
+        }
+
+        .search-and-icons .user-icons div {
+            padding-right: 1em;
+        }
+
+        .contact-info p,
+        .contact-info a {
+            font-size: 0.9em;
+            padding-right: 1em;
+            color: grey;
+        }
+
+        .contact-info a {
+            padding-right: 0;
+        }
+    </style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light " style="background: #3ab9c5; color: white; font-weight: 600;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="home">
+            <img th:src="@{/images/logo.jpg}" style="border-radius: 18px; margin-left: 40px;"
+                 src="../static/Images/logo.jpg" width="auto" height="40" class="d-inline-block align-top" alt=""/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: white; font-weight: 600;" th:href="@{/}" href="#">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: white; font-weight: 600;" th:href="@{/shop}" href="#">Shop</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" style="color: white;font-weight: 600" th:href="@{/cart}">Cart<p
+                            style="display: inline;">(<span th:text="${cartCount}">0</span>)</p></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: white; font-weight: 600;" sec:authorize="isAnonymous()"
+                       th:href="@{/login}" href="#">Login</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: white; font-weight: 600;" sec:authorize="isAuthenticated()"
+                       th:href="@{/logout}" href="#">Logout</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <strong th:text="${result}"></strong>
+                    <br>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                    <p>
+                        <em>Receipt #: 34522677W</em>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <h1>Receipt</h1>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Components</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="entry : ${parameters}">
+
+                        <td th:text="${entry.key} + '  : -  ' + ${entry.value}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

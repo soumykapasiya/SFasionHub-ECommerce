@@ -1,0 +1,11 @@
+body{
+    background-color: rgba(255, 111, 111, 0.5);
+}
+
+.navbar{
+    background-color: rgba(35, 131, 238, 0.5);
+}
+
+h1{
+    color: aqua;
+}

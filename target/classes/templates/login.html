@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <title>Sanwara Fashion Hub</title>
+
+    <style>
+        /*a:hover{*/
+        /*    color: #3ab9c5;*/
+        /*    text-decoration: underline;*/
+        /*}*/
+
+        @import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap');
+
+        .navbar {
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .navbar-brand img {
+            max-width: 100px;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (min-width: 1024px) {
+            .navbar {
+                letter-spacing: 0.1em;
+            }
+
+            .navbar .navbar-nav .nav-link {
+                padding: 0.5em 1em;
+            }
+
+            .search-and-icons {
+                width: 50%;
+            }
+
+            .search-and-icons form {
+                flex: 1;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .navbar .navbar-brand img {
+                max-width: 7em;
+            }
+
+            .navbar .navbar-collapse {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: flex-end;
+            }
+        }
+
+        .search-and-icons form input {
+            border-radius: 0;
+            height: 2em;
+            background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='grey' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 95%;
+        }
+
+        .search-and-icons form input:focus {
+            background: #fff;
+            box-shadow: none;
+        }
+
+        .search-and-icons .user-icons div {
+            padding-right: 1em;
+        }
+
+    </style>
+    <style>
+        :root {
+            --lg-font: 'Kaisei Tokumin', serif;
+            --sm-font: 'Poppins', sans-serif;
+            --pink: #3ab9c5;
+        }
+
+        body {
+            font-family: var(--sm-font);
+        }
+
+        /* button */
+        .bg-primary {
+            background-color: var(--pink) !important;
+        }
+
+        .btn:not(.nav-btns button) {
+            background-color: var(--pink);
+            color: white;
+            padding: 10px 28px;
+            border-radius: 25px;
+            border: 1px solid var(--pink);
+        }
+
+        .btn:not(.nav-btns button):hover {
+            background-color: var(--pink);
+            color: #fff;
+            border-color: var(--pink);
+        }
+
+        /* text color */
+        .text-primary {
+            color: var(--pink) !important;
+        }
+
+        /* header */
+        #header {
+            background: url("https://media.istockphoto.com/id/1400248058/photo/clothes-on-hangers-new-fashion-collection-at-fashionable-clothes-store-clothing-rental-or.jpg?s=612x612&w=0&k=20&c=OVIaQ53rN2Y35fH4rBEoUwVAADTLSKwgc9k4katrXrs=") center/cover no-repeat;
+        }
+
+        .carousel-inner h1 {
+            font-size: 60px;
+            font-family: var(--lg-font);
+        }
+
+        .carousel-item .btn {
+            border-color: #fff !important;
+        }
+
+        .carousel-item .btn:hover {
+            border-color: var(--pink) !important;
+        }
+
+        /* title */
+        .title h2::before {
+            position: absolute;
+            content: "";
+            width: 4px;
+            height: 50px;
+            background-color: var(--pink);
+            left: -20px;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        /* collection */
+        .active-filter-btn {
+            background-color: var(--pink) !important;
+            color: #fff !important;
+            border-color: var(--pink) !important;
+        }
+
+        .filter-button-group .btn:hover {
+            color: #fff !important;
+        }
+
+        .collection-img span {
+            top: 20px;
+            right: 20px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+
+        /* special */
+        .special-img span {
+            top: 20px;
+            right: 20px;
+        }
+
+        .special-list .btn {
+            padding: 8px 20px !important;
+        }
+
+        .special-img img {
+            -webkit-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .special-img:hover img {
+            -webkit-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        /* offers */
+        #offers {
+            background: url("https://jump-off-fashion.com/cdn/shop/files/DSC_1517_1440x959_crop_center.jpg?v=1615321253") center/cover no-repeat;
+        }
+
+        #offers .row {
+            min-height: 60vh;
+        }
+
+        .offers-content span {
+            font-size: 28px;
+        }
+
+        .offers-content h2 {
+            font-size: 60px;
+            font-family: var(--lg-font);
+        }
+
+        .offers-content .btn {
+            border-color: transparent !important;
+        }
+
+        /* about */
+        #about {
+            background-color: rgba(179, 179, 179, 0.05);
+        }
+
+        /* newsletter */
+        #newsletter {
+            background-color: rgba(179, 179, 179, 0.05);
+        }
+
+        #newsletter p {
+            max-width: 600px;
+        }
+
+        #newsletter .input-group {
+            max-width: 500px;
+        }
+
+        #newsletter .form-control {
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+        }
+
+        #newsletter .btn {
+            background-color: var(--pink);
+            color: #fff;
+            border-color: var(--pink);
+        }
+
+        #newsletter .btn:hover {
+            background-color: #000;
+            border-color: #000;
+        }
+
+        /* footer */
+        footer .brand {
+            font-family: var(--lg-font);
+            letter-spacing: 2px;
+        }
+
+        footer a {
+            color: white;
+        }
+
+        footer a:hover {
+            color: var(--pink);
+        }
+
+        /* media queries */
+        @media (min-width: 992px) {
+            .nav-item {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-md " style="background: #3ab9c5">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}" style="margin-left: 30px">
+            <img th:src="@{/images/logo.jpg}" style="width: 50px; border-radius: 3rem; margin-left: 20px"
+                 class="d-inline-block align-top" alt=""/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        style="color: white;font-weight: 600" th:href="@{/}" href="#">Home</a></li>
+
+                <li class="nav-item"><a class="nav-link active" th:href="@{/shop}" style="color: white;font-weight: 600"
+                                        href="#">Shop</a></li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" sec:authorize="isAuthenticated()" style="color: white;font-weight: 600"
+                       th:href="@{/logout}">Logout</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" style="color: white;font-weight: 600"
+                       th:href="@{/register}" href="#">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-sm-6">
+            <h2>Login</h2>
+            <p>Please fill out this to login</p>
+            <form th:action="@{/login}" method="post" th:object="${userLogin}">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" th:field="*{username}" id="email" placeholder="Your Email"
+                           class="form-control form-control-lg">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" th:field="*{password}" class="form-control form-control-lg"
+                           placeholder="Password" id="password">
+                </div>
+                <div th:if="${param.error}" class="alert alert-error text-danger">
+                    Invalid username or password.
+                </div>
+
+                <input type="submit" value="Login" style="background: #3ab9c5;color: white;font-weight: 600"
+                       class="btn  btn-block">
+                <br>
+                <span>Don't have an account <a class="linkControl" style="color: #3ab9c5" href="#"
+                                               th:href="@{/register}">Register here</a></span>
+                <br>
+                <a href="#" style="color: #3ab9c5" th:href="@{/forgotpassword}">Forgot password ?</a>
+            </form>
+            <br>
+            <h3>OR</h3>
+            <a href="/oauth2/authorization/google" style="background: #3ab9c5 ;color: white;font-weight: 600"
+               class="btn ">Sign-In with google </a>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

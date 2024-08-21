@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <title>Sanwara Fashion Hub</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars-offcanvas/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap');
+        /*a:hover{*/
+        /*    color: #3ab9c5;*/
+        /*    text-decoration: underline;*/
+        /*}*/
+        .navbar {
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .navbar-brand img {
+            max-width: 100px;
+        }
+        .navbar .navbar-nav .nav-link {
+            color: #000;
+        }
+        .navbar .navbar-nav .nav-link:hover{
+            text-decoration: underline;
+        }
+
+        @media screen and (min-width: 1024px) {
+            .navbar {
+                letter-spacing: 0.1em;
+            }
+            .navbar .navbar-nav .nav-link {
+                padding: 0.5em 1em;
+            }
+            .search-and-icons {
+                width: 50%;
+            }
+            .search-and-icons form {
+                flex: 1;
+            }
+        }
+        @media screen and (min-width: 768px) {
+            .navbar .navbar-brand img {
+                max-width: 7em;
+            }
+            .navbar .navbar-collapse {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: flex-end;
+            }
+        }
+        .search-and-icons form input {
+            border-radius: 0;
+            height: 2em;
+            background: #fff
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='grey' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E")
+            no-repeat 95%;
+        }
+        .search-and-icons form input:focus {
+            background: #fff;
+            box-shadow: none;
+        }
+        .search-and-icons .user-icons div {
+            padding-right: 1em;
+        }
+
+    </style>
+    <style>
+        :root{
+            --lg-font: 'Kaisei Tokumin', serif;
+            --sm-font: 'Poppins', sans-serif;
+            --pink: #3ab9c5;
+        }
+        body{
+            font-family: var(--sm-font);
+        }
+
+        /* button */
+        .bg-primary{
+            background-color: var(--pink)!important;
+        }
+
+        .btn:not(.nav-btns button){
+            background-color: var(--pink);
+            color: white;
+            padding: 10px 28px;
+            border-radius: 25px;
+            border: 1px solid var(--pink);
+        }
+        .btn:not(.nav-btns button):hover{
+            background-color: var(--pink);
+            color: #fff;
+            border-color: var(--pink);
+        }
+
+        /* text color */
+        .text-primary{
+            color: var(--pink)!important;
+        }
+
+        /* header */
+        #header{
+            background: url("https://media.istockphoto.com/id/1400248058/photo/clothes-on-hangers-new-fashion-collection-at-fashionable-clothes-store-clothing-rental-or.jpg?s=612x612&w=0&k=20&c=OVIaQ53rN2Y35fH4rBEoUwVAADTLSKwgc9k4katrXrs=") center/cover no-repeat;
+        }
+        .carousel-inner h1{
+            font-size: 60px;
+            font-family: var(--lg-font);
+        }
+        .carousel-item .btn{
+            border-color: #fff!important;
+        }
+        .carousel-item .btn:hover{
+            border-color: var(--pink)!important;
+        }
+
+        /* title */
+        .title h2::before{
+            position: absolute;
+            content: "";
+            width: 4px;
+            height: 50px;
+            background-color: var(--pink);
+            left: -20px;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        /* collection */
+        .active-filter-btn{
+            background-color: var(--pink)!important;
+            color: #fff!important;
+            border-color: var(--pink)!important;
+        }
+        .filter-button-group .btn:hover{
+            color: #fff!important;
+        }
+        .collection-img span{
+            top: 20px;
+            right: 20px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+
+        /* special */
+        .special-img span{
+            top: 20px;
+            right: 20px;
+        }
+        .special-list .btn{
+            padding: 8px 20px!important;
+        }
+        .special-img img{
+            -webkit-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        .special-img:hover img{
+            -webkit-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        /* offers */
+        #offers{
+            background: url("https://jump-off-fashion.com/cdn/shop/files/DSC_1517_1440x959_crop_center.jpg?v=1615321253") center/cover no-repeat;
+        }
+        #offers .row{
+            min-height: 60vh;
+        }
+        .offers-content span{
+            font-size: 28px;
+        }
+        .offers-content h2{
+            font-size: 60px;
+            font-family: var(--lg-font);
+        }
+        .offers-content .btn{
+            border-color: transparent!important;
+        }
+
+        /* about */
+        #about{
+            background-color: rgba(179, 179, 179, 0.05);
+        }
+
+        /* newsletter */
+        #newsletter{
+            background-color: rgba(179, 179, 179, 0.05);
+        }
+        #newsletter p{
+            max-width: 600px;
+        }
+        #newsletter .input-group{
+            max-width: 500px;
+        }
+        #newsletter .form-control{
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+        }
+        #newsletter .btn{
+            background-color: var(--pink);
+            color: #fff;
+            border-color: var(--pink);
+        }
+        #newsletter .btn:hover{
+            background-color: #000;
+            border-color: #000;
+        }
+
+        /* footer */
+        footer .brand{
+            font-family: var(--lg-font);
+            letter-spacing: 2px;
+        }
+        footer a{
+            color: white;
+        }
+        footer a:hover{
+            color: var(--pink);
+        }
+
+        /* media queries */
+        @media(min-width: 992px){
+            .nav-item{
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md " style="background: #3ab9c5">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="margin-left: 30px">
+            <img th:src="@{/images/logo.jpg}" style="width: 50px; border-radius: 3rem; margin-left: 20px"  class="d-inline-block align-top" alt=""/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item"><a class="nav-link active" th:href="@{/}" aria-current="page" style="color: white;font-weight: 600" href="#">Home</a></li>
+
+                <li class="nav-item"><a class="nav-link active" th:href="@{/shop}" style="color: white;font-weight: 600" href="#">Shop</a></li>
+
+                <li class="nav-item dropdown" >
+                    <a class="nav-link dropdown-toggle" style="color: white;font-weight: 600" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu" style="text-align: center" >
+                        <a th:href="@{/shop}" style="color: #3ab9c5; font-weight: 600;"><li class="list-group-item">All Products</li></a>
+                        <li><hr class="dropdown-divider"></li>
+                        <a href="" th:each="category, iStat : ${categories}" style="color: #3ab9c5; font-weight: 600;"  th:href="@{/shop/category/{id}(id=${category.id})}" class="list-group-item" th:text="${category.name}"> </a>
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" >
+                    <a class="nav-link" href="#" style="color: white;font-weight: 600" th:href="@{/cart}">Cart<p style="display: inline;">(<span th:text="${cartCount}">0</span>)</p></a>
+                </li>
+
+                <li class="nav-item" >
+                    <a class="nav-link" href="#" sec:authorize="isAuthenticated()" style="color: white;font-weight: 600" th:href="@{/logout}">Logout</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" style="color: white;font-weight: 600"  th:href="@{/login}" href="#">Login/Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<section id = "collection" class = "py-5">
+    <div class = "container">
+        <div class = "title text-center">
+            <h2 class = "position-relative d-inline-block">All Collections</h2>
+        </div>
+
+        <div class = "row g-0">
+            <div class = "d-flex flex-wrap justify-content-center mt-5 filter-button-group" >
+                <!--                <button type = "button" class = "btn m-2 text-dark active-filter-btn" data-filter = "*">All</button>-->
+                <!--                <button type = "button" class = "btn m-2 text-dark" data-filter = ".best">Best Sellers</button>-->
+                <!--                <button type = "button" class = "btn m-2 text-dark" data-filter = ".feat">Featured</button>-->
+                <!--                <button type = "button" class = "btn m-2 text-dark" data-filter = ".new">New Arrival</button>-->
+            </div>
+
+            <div class = "collection-list mt-4 row gx-0 gy-3">
+                <div class = "col-md-6 col-lg-4 col-xl-3 p-2 best" th:each="product : ${products}">
+                    <div class = "collection-img position-relative"  >
+                        <img src = "" class = "w-100" style="width: 300px; height: 400px" th:src="@{${'/productImages/' + product.imageName}}" alt="Img" >
+                        <span class = "position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
+                    </div>
+                    <div class = "text-center">
+                        <div class = "rating mt-3">
+                            <span class = "text-primary"><i class = "fas fa-star"></i></span>
+                            <span class = "text-primary"><i class = "fas fa-star"></i></span>
+                            <span class = "text-primary"><i class = "fas fa-star"></i></span>
+                            <span class = "text-primary"><i class = "fas fa-star"></i></span>
+                            <span class = "text-primary"><i class = "fas fa-star"></i></span>
+                        </div>
+                        <p class = "text-capitalize my-1" th:text="${product.name}">gray shirt</p>
+                        ₹ <span th:text="${product.price}"></span>
+                        <br>
+                        <a href="#" th:href="@{/shop/viewProduct/{id}(id=${product.id})}" class="btn" style="background: #3ab9c5; color: white; font-weight: 500;">View Product</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
